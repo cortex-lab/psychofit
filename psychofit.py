@@ -22,7 +22,6 @@ For more info, see:
 Matteo Carandini, 2000-2015
 '''
 
-import math
 import functools
 import numpy as np
 import scipy.optimize
@@ -79,7 +78,7 @@ def mle_fit_psycho(data, P_model='weibull', parstart=None, parmin=None, parmax=N
         2018-08 MW ported to Python
     """
     # Input validation
-    if isinstance(data, list):
+    if isinstance(data, (list, tuple)):
         data = np.array(data)
     elif not isinstance(data, np.ndarray):
         raise TypeError('data must be a list or numpy array')
@@ -148,7 +147,7 @@ def neg_likelihood(pars, data, P_model='weibull', parmin=None, parmax=None):
         2018-08 MW ported to Python
     """
     # Validate input
-    if isinstance(data, list):
+    if isinstance(data, (list, tuple)):
         data = np.array(data)
     elif not isinstance(data, np.ndarray):
         raise TypeError('data must be a list or numpy array')
@@ -210,7 +209,7 @@ def weibull(pars, xx):
         2018-08 MW ported to Python
     """
     # Validate input
-    if isinstance(pars, list):
+    if isinstance(pars, (list, tuple)):
         pars = np.array(pars)
     elif not isinstance(pars, np.ndarray):
         raise TypeError('pars must be a list or numpy array')
@@ -247,7 +246,7 @@ def weibull50(pars, xx):
         2018-08 MW ported to Python
     """
     # Validate input
-    if isinstance(pars, list):
+    if isinstance(pars, (list, tuple)):
         pars = np.array(pars)
     elif not isinstance(pars, np.ndarray):
         raise TypeError('pars must be a list or numpy array')
@@ -291,7 +290,7 @@ def erf_psycho(pars, xx):
         2018-08 MW ported to Python
     """
     # Validate input
-    if isinstance(pars, list):
+    if isinstance(pars, (list, tuple)):
         pars = np.array(pars)
     elif not isinstance(pars, np.ndarray):
         raise TypeError('pars must be a list or numpy array')
@@ -335,7 +334,7 @@ def erf_psycho_2gammas(pars, xx):
         2018-08 MW ported to Python
     """
     # Validate input
-    if isinstance(pars, list):
+    if isinstance(pars, (list, tuple)):
         pars = np.array(pars)
     elif not isinstance(pars, np.ndarray):
         raise TypeError('pars must be a list or numpy array')
