@@ -24,5 +24,5 @@ Functions in the toolbox are:
 For more info, see:
   Examples           - Examples of use of psychofit toolbox
 
-Matteo Carandini (2000-2017) initial Matlab code
+Matteo Carandini (2000-2017) initial Matlab code<br>
 Miles Wells (2017-2018) ported to Python
