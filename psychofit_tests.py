@@ -24,6 +24,7 @@ class PsychofitTest(unittest.TestCase):
             np.array([0.1, 0.125, 0.25, 0.15, 0.6, 0.65, 0.75, 0.9, 0.9, 0.85])
         ])}
         self.test_data = data
+        np.random.seed(0)
 
     def test_weibull50(self):
         xx = self.test_data['weibull50'][0, :]
@@ -116,15 +117,15 @@ class PsychofitTest(unittest.TestCase):
             'weibull50': (np.array([0.0034045, 3.9029162, .1119576]), -334.1149693046583),
             'weibull': (np.array([0.00316341, 1.72552866, 0.1032307]), -261.235178611311),
             'erf_psycho': (np.array([-9.78747259, 10., 0.15967605]), -193.0509031440323),
-            'erf_psycho_2gammas': (np.array([-11.44767351, 9.9999999, 0.24116007, 0.02703611]),
+            'erf_psycho_2gammas': (np.array([-11.45463779, 9.9999999, 0.24117732, 0.0270835]),
                                    -147.02380025592902)
         }
         for model in self.test_data.keys():
             pars, L = psy.mle_fit_psycho(self.test_data[model], P_model=model, nfits=10)
             expected_pars, expected_L = expected[model]
-            self.assertTrue(np.allclose(expected_pars, pars, atol=1e-2),
+            self.assertTrue(np.allclose(expected_pars, pars, atol=1e-3),
                             f'unexpected pars for {model}')
-            self.assertTrue(np.isclose(expected_L, L, atol=1e-1),
+            self.assertTrue(np.isclose(expected_L, L, atol=1e-3),
                             f'unexpected likelihood for {model}')
 
         # Test on of the models with function pars
@@ -132,14 +133,16 @@ class PsychofitTest(unittest.TestCase):
             'parmin': np.array([-5., 10., 0.]),
             'parmax': np.array([5., 15., .1]),
             'parstart': np.array([0., 11., 0.1]),
-            'nfits': 10
+            'nfits': 5
         }
         model = 'erf_psycho'
         pars, L = psy.mle_fit_psycho(self.test_data[model], P_model=model, **params)
         expected = [-5, 15, 0.1]
-        self.assertTrue(np.allclose(expected, pars, rtol=1), f'unexpected pars for {model}')
-        self.assertTrue(np.isclose(-195.52512, L, atol=1e-1), f'unexpected likelihood for {model}')
+        self.assertTrue(np.allclose(expected, pars, rtol=.01), f'unexpected pars for {model}')
+        self.assertTrue(np.isclose(-195.55603, L, atol=1e-5), f'unexpected likelihood for {model}')
 
+    def tearDown(self):
+        np.random.seed()
 
 if __name__ == '__main__':
     unittest.main()
