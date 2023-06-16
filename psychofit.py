@@ -23,6 +23,7 @@ Matteo Carandini, 2000-2015
 """
 
 import functools
+
 import numpy as np
 import scipy.optimize
 from scipy.special import erf
