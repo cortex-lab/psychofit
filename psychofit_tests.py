@@ -41,8 +41,8 @@ class PsychofitTest(unittest.TestCase):
         )
         self.assertTrue(np.allclose(expected, actual))
 
-        with self.assertRaises(ValueError):
-            psy.weibull50((alpha, beta), xx)
+        self.assertRaises(ValueError, psy.weibull50, (alpha, beta), xx)
+        self.assertRaises(TypeError, psy.weibull50, None, xx)
 
     def test_weibull(self):
         xx = self.test_data['weibull'][0, :]
@@ -59,8 +59,8 @@ class PsychofitTest(unittest.TestCase):
         )
         self.assertTrue(np.allclose(expected, actual))
 
-        with self.assertRaises(ValueError):
-            psy.weibull((alpha, beta), xx)
+        self.assertRaises(ValueError, psy.weibull, (alpha, beta), xx)
+        self.assertRaises(TypeError, psy.weibull, None, xx)
 
     def test_erf_psycho(self):
         xx = self.test_data['erf_psycho'][0, :]
@@ -78,6 +78,7 @@ class PsychofitTest(unittest.TestCase):
         )
         self.assertTrue(np.allclose(expected, actual))
 
+        self.assertRaises(TypeError, psy.erf_psycho, None, xx)
         with self.assertRaises(ValueError):
             psy.erf_psycho((bias, threshold, lapse, lapse), xx)
 
@@ -98,17 +99,18 @@ class PsychofitTest(unittest.TestCase):
         )
         self.assertTrue(np.allclose(expected, actual))
 
+        self.assertRaises(TypeError, psy.erf_psycho_2gammas, None, xx)
         with self.assertRaises(ValueError):
             psy.erf_psycho_2gammas((bias, threshold, gamma1), xx)
 
     def test_neg_likelihood(self):
         data = self.test_data['erf_psycho']
-        with self.assertRaises(ValueError):
-            psy.neg_likelihood((10, 20, .05), data[1:, :])
-        with self.assertRaises(TypeError):
-            psy.neg_likelihood('(10, 20, .05)', data)
+        self.assertRaises(ValueError, psy.neg_likelihood, (10, 20, .05), data[1:, :])
+        self.assertRaises(TypeError, psy.neg_likelihood, '(10, 20, .05)', data)
+        self.assertRaises(TypeError, psy.neg_likelihood, '(10, 20, .05)', None)
+        self.assertRaises(ValueError, psy.neg_likelihood, (.5, 10, .05), data, P_model='foo')
 
-        l = psy.neg_likelihood((-20, 30, 2), data, P_model='erf_psycho',
+        l = psy.neg_likelihood((-20, 30, 2), data.tolist(), P_model='erf_psycho',
                                parmin=np.array((-10, 20, 0)), parmax=np.array((10, 10, .05)))
         self.assertTrue(l > 10000)
 
@@ -128,7 +130,7 @@ class PsychofitTest(unittest.TestCase):
             self.assertTrue(np.isclose(expected_L, L, atol=1e-3),
                             f'unexpected likelihood for {model}')
 
-        # Test on of the models with function pars
+        # Test one of the models with function pars
         params = {
             'parmin': np.array([-5., 10., 0.]),
             'parmax': np.array([5., 15., .1]),
@@ -136,13 +138,18 @@ class PsychofitTest(unittest.TestCase):
             'nfits': 5
         }
         model = 'erf_psycho'
-        pars, L = psy.mle_fit_psycho(self.test_data[model], P_model=model, **params)
+        pars, L = psy.mle_fit_psycho(self.test_data[model].tolist(), P_model=model, **params)
         expected = [-5, 15, 0.1]
         self.assertTrue(np.allclose(expected, pars, rtol=.01), f'unexpected pars for {model}')
         self.assertTrue(np.isclose(-195.55603, L, atol=1e-5), f'unexpected likelihood for {model}')
 
+        # Test input validation
+        self.assertRaises(ValueError, psy.mle_fit_psycho, np.zeros((4, 4)))  # wrong shape
+        self.assertRaises(TypeError, psy.mle_fit_psycho, None)  # wrong type
+
     def tearDown(self):
         np.random.seed()
+
 
 if __name__ == '__main__':
     unittest.main()

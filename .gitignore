@@ -1,0 +1,16 @@
+docs/_build
+docs/_autosummary
+__pycache__
+*.*~
+*.pyc
+python/scratch
+.idea/*
+.vscode/
+*checkpoint.ipynb
+build/
+venv/
+dist/
+.DS_Store
+scratch/
+.coverage
+*.egg-info/
