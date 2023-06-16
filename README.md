@@ -1,7 +1,7 @@
 
 # psychofit
-[![Coverage Status](https://coveralls.io/repos/github/cortex-lab/psychofit/badge.svg?branch=main)](https://coveralls.io/github/cortex-lab/psychofit?branch=main)
-![CI workflow](https://github.com/cortex-lab/psychofit/actions/workflows/main.yaml/badge.svg?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/cortex-lab/psychofit/badge.svg?branch=main)](https://coveralls.io/github/cortex-lab/psychofit?branch=master)
+![CI workflow](https://github.com/cortex-lab/psychofit/actions/workflows/main.yaml/badge.svg?branch=master)
 
 A module for fitting 2AFC psychometric data
 
