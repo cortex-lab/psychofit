@@ -31,7 +31,7 @@ jobs:
         pip install -e .
     - name: run tests
       run: |
-        coverage run -m unittest psychofit_tests.py
+        coverage run --omit=*tests.py -m unittest psychofit_tests.py
     - name: Upload coverage data to coveralls.io
       run: coveralls --service=github
       env:
