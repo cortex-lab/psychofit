@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/cortex-lab/psychofit/badge.svg?branch=master)](https://coveralls.io/github/cortex-lab/psychofit?branch=master)
 [![CI](https://github.com/cortex-lab/psychofit/actions/workflows/main.yaml/badge.svg)](https://github.com/cortex-lab/psychofit/actions/workflows/main.yaml)
 
-A module for fitting 2AFC psychometric data
+A module for fitting 2AFC psychometric data.
 
 The psychofit module contains tools to fit two-alternative psychometric
 data. The fitting is done using maximal likelihood estimation: one
@@ -14,18 +14,19 @@ The data can be expressed in fraction correct (from 50 to 100%) or in
 fraction of one specific choice (from 0 to 100%). To fit them you can use
 these functions:
 
- - `weibull50`          - Weibull function from 0.5 to 1, with lapse rate 
- - `weibull`            - Weibull function from 0 to 1, with lapse rate  
- - `erf_psycho`         - erf function from 0 to 1, with lapse rate
- - `erf_psycho_2gammas` - erf function from 0 to 1, with two lapse rates
+ - `weibull50`          - Weibull function from 0.5 to 1, with lapse rate.
+ - `weibull`            - Weibull function from 0 to 1, with lapse rate.
+ - `erf_psycho`         - erf function from 0 to 1, with lapse rate.
+ - `erf_psycho_2gammas` - erf function from 0 to 1, with two lapse rates.
 
 Functions in the toolbox are:
 
- - `mle_fit_psycho`     - Maximumum likelihood fit of psychometric function
- - `neg_likelihood`     - Negative likelihood of a psychometric function
+ - `mle_fit_psycho`     - Maximumum likelihood fit of psychometric function.
+ - `neg_likelihood`     - Negative likelihood of a psychometric function.
 
 For more info, see:
-  Examples           - Examples of use of psychofit toolbox
+
+ - `Examples.ipynb`     - Examples of use of psychofit toolbox.
 
 Matteo Carandini (2000-2017) initial Matlab code<br>
 Miles Wells (2017-2018) ported to Python

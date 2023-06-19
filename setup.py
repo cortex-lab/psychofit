@@ -8,7 +8,7 @@ with open('README.md', 'r') as f:
 
 setup(
     name='Psychofit',
-    version='1.0.0',
+    version='1.0.0-r0',
     python_requires='>=3.7',
     description='A module for fitting 2AFC psychometric data',
     license='MIT',
@@ -16,7 +16,7 @@ setup(
     long_description_content_type='text/markdown',
     author='Matteo Carandini & Miles Wells',
     url='https://github.com/cortex-lab/psychofit',
-    classifiers = [
+    classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
