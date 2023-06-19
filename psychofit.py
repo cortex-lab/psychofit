@@ -7,17 +7,15 @@ distribution whose mean is given by the psychometric function.
 The data can be expressed in fraction correct (from .5 to 1) or in
 fraction of one specific choice (from 0 to 1). To fit them you can use
 these functions:
-  weibull50          - Weibull function from 0.5 to 1, with lapse rate
-  weibull            - Weibull function from 0 to 1, with lapse rate
-  erf_psycho         - erf function from 0 to 1, with lapse rate
-  erf_psycho_2gammas - erf function from 0 to 1, with two lapse rates
-
+  - weibull50:          Weibull function from 0.5 to 1, with lapse rate
+  - weibull:            Weibull function from 0 to 1, with lapse rate
+  - erf_psycho:         erf function from 0 to 1, with lapse rate
+  - erf_psycho_2gammas: erf function from 0 to 1, with two lapse rates
 Functions in the toolbox are:
-  mle_fit_psycho     - Maximumum likelihood fit of psychometric function
-  neg_likelihood     - Negative likelihood of a psychometric function
-
+  - mle_fit_psycho:     Maximum likelihood fit of psychometric function
+  - neg_likelihood:     Negative likelihood of a psychometric function
 For more info, see:
-  Examples           - Examples of use of psychofit toolbox
+  - Examples:           Examples of use of psychofit toolbox
 
 Matteo Carandini, 2000-2015
 """
@@ -85,7 +83,7 @@ def mle_fit_psycho(data, P_model='weibull', parstart=None, parmin=None, parmax=N
     if data.shape[0] != 3:
         raise ValueError('data must be m by 3 matrix')
 
-    rep = lambda x: (x, x) if P_model.endswith('2gammas') else (x,)
+    rep = lambda x: (x, x) if P_model.endswith('2gammas') else (x,)  # noqa
     if parstart is None:
         parstart = np.array([np.mean(data[0, :]), 3., *rep(.05)])
     if parmin is None:
@@ -103,7 +101,7 @@ def mle_fit_psycho(data, P_model='weibull', parstart=None, parmin=None, parmax=N
                           P_model=P_model, parmin=parmin, parmax=parmax)
     for ifit in range(nfits):
         pars[ifit, :] = scipy.optimize.fmin(f, parstart, disp=False)
-        parstart = parmin + np.random.rand(parmin.size) * (parmax-parmin)
+        parstart = parmin + np.random.rand(parmin.size) * (parmax - parmin)
         likelihoods[ifit] = -neg_likelihood(pars[ifit, :], data[:, ii], P_model, parmin, parmax)
 
     # the values to be output
@@ -128,7 +126,7 @@ def neg_likelihood(pars, data, P_model='weibull', parmin=None, parmax=None):
         parmax: Maximum bound for parameters.  If None, some reasonable defaults are used
 
     Returns:
-        l: The likelihood of the parameters.  The equation is:
+        ll: The likelihood of the parameters.  The equation is:
             - sum(nn.*(pp.*log10(P_model)+(1-pp).*log10(1-P_model)))
             See the the appendix of Watson, A.B. (1979). Probability
             summation over time. Vision Res 19, 515-522.
@@ -165,8 +163,8 @@ def neg_likelihood(pars, data, P_model='weibull', parmin=None, parmax=None):
 
     # here is where you effectively put the constraints.
     if (any(pars < parmin)) or (any(pars > parmax)):
-        l = 10000000
-        return l
+        ll = 10000000
+        return ll
 
     dispatcher = {
         'weibull': weibull,
@@ -186,8 +184,8 @@ def neg_likelihood(pars, data, P_model='weibull', parmin=None, parmax=None):
     probs[probs == 0] = np.finfo(float).eps
     probs[probs == 1] = 1 - np.finfo(float).eps
 
-    l = - sum(nn * (pp * np.log(probs) + (1 - pp) * np.log(1 - probs)))
-    return l
+    ll = - sum(nn * (pp * np.log(probs) + (1 - pp) * np.log(1 - probs)))
+    return ll
 
 
 def weibull(pars, xx):
@@ -218,7 +216,7 @@ def weibull(pars, xx):
         raise ValueError('pars must be of length 3')
 
     alpha, beta, gamma = pars
-    return (1 - gamma) - (1 - 2*gamma) * np.exp(-((xx / alpha)**beta))
+    return (1 - gamma) - (1 - 2 * gamma) * np.exp(-((xx / alpha) ** beta))
 
 
 def weibull50(pars, xx):

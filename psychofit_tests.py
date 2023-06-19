@@ -110,9 +110,9 @@ class PsychofitTest(unittest.TestCase):
         self.assertRaises(TypeError, psy.neg_likelihood, '(10, 20, .05)', None)
         self.assertRaises(ValueError, psy.neg_likelihood, (.5, 10, .05), data, P_model='foo')
 
-        l = psy.neg_likelihood((-20, 30, 2), data.tolist(), P_model='erf_psycho',
-                               parmin=np.array((-10, 20, 0)), parmax=np.array((10, 10, .05)))
-        self.assertTrue(l > 10000)
+        ll = psy.neg_likelihood((-20, 30, 2), data.tolist(), P_model='erf_psycho',
+                                parmin=np.array((-10, 20, 0)), parmax=np.array((10, 10, .05)))
+        self.assertTrue(ll > 10000)
 
     def test_mle_fit_psycho(self):
         expected = {
