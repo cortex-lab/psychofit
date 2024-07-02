@@ -118,7 +118,7 @@ def neg_likelihood(pars, data, P_model='weibull', parmin=None, parmax=None):
 
     Args:
         pars: Model parameters [threshold, slope, gamma], or if
-              using the 'erf_psycho_2gammas' model append a second gamma value.
+              using the 'erf_psycho_2gammas' model append a second gamma value (i.e. lapse high).
         data: 3 x n matrix where first row corresponds to stim levels,
               the second to number of trials for each stim level (int),
               the third to proportion correct / proportion rightward (float between 0 and 1)
@@ -292,8 +292,11 @@ def erf_psycho_2gammas(pars, xx):
     """
     erf function from 0 to 1, with two lapse rates.
 
+    gamma1 cooresponds to 'lapse low', i.e. the lapse rate at low (-ve) stimulus values;
+    gamma2 cooresponds to 'lapse high'.
+
     Args:
-        pars: Model parameters [bias, slope, gamma].
+        pars: Model parameters [bias, slope, gamma1, gamma2].
         xx: vector of stim levels (%)
 
     Returns:
